@@ -5,7 +5,7 @@ export const guardarRegistro = async (req, res) => {
   const { fecha, tipo_servicio, conductor, placa, fecha_viaje, origen, sedes, total_valor, observacion } = req.body;
 
   try {
-    const { data, error } = await supabase.from('registros').insert([
+    const { data, error } = await supabase.from('transporte').insert([
       { fecha, tipo_servicio, conductor, placa, fecha_viaje, origen, sedes, total_valor, observacion }
     ]);
 
