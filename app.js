@@ -1,13 +1,14 @@
-// app.js
-import dotenv from 'dotenv';
+
+// backend/server.js
 import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import supabase from './supabaseCliente.js';
-import formRoutes from './routes/formRoutes.js';
+import registroRoutes from './routes/registroRoutes.js';
 
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 3001;
 
 // Configurar CORS para permitir solicitudes desde el frontend
 app.use(cors({
@@ -17,23 +18,13 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use('/api', registroRoutes);
 
-// Middleware para inyectar supabase en req (opcional si lo usas en los controladores)
-app.use((req, res, next) => {
-  req.supabase = supabase;
-  next();
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
 });
 
-// Usar las rutas definidas bajo /api
-app.use('/api', formRoutes);
 
-// Ruta de prueba
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'El ternero se crió correctamente' });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  res.send('♥activo el terreneitor♥');
 });
