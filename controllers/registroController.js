@@ -1,22 +1,9 @@
 import supabase from '../config/supabaseClient.js';
 
-// Función para guardar un registro en la tabla "transporte"
 export const guardarRegistro = async (req, res) => {
-  // Extraemos los campos enviados desde el frontend
-  const { 
-    fecha, 
-    tipo_formulario, 
-    conductor, 
-    placa_vehiculo, 
-    fecha_viaje, 
-    origen, 
-    sedes, 
-    valor_total, 
-    observacion 
-  } = req.body;
+  const { fecha, tipo_formulario, conductor, placa_vehiculo, fecha_viaje, origen, sedes, valor_total, observacion } = req.body;
 
   try {
-    // Insertamos los datos en la tabla "transporte"
     const { data, error } = await supabase.from('transporte').insert([
       { 
         fecha, 
@@ -24,8 +11,8 @@ export const guardarRegistro = async (req, res) => {
         conductor, 
         placa_vehiculo, 
         fecha_viaje, 
-        origen,      // Se espera un array (ej.: ["sede1", "sede3"] o ["Cedi"])
-        sedes,       // Se espera un array (ej.: ["Cedi"] o ["sede2", "sede3"])
+        origen,      // Se espera un array (ej.: ["Parque", "Plaza"] o ["Cedi"])
+        sedes,       // Se espera un array (ej.: ["Cedi"] o ["Llano", "Vegas"])
         valor_total, 
         observacion 
       }
@@ -42,7 +29,6 @@ export const guardarRegistro = async (req, res) => {
   }
 };
 
-// Función para obtener el historial de registros
 export const obtenerHistorial = async (req, res) => {
   try {
     const { data, error } = await supabase.from('transporte').select('*');
@@ -53,6 +39,27 @@ export const obtenerHistorial = async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     console.error("Error en el controlador:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const actualizarRegistro = async (req, res) => {
+  const { id } = req.params;
+  const { estado, observacion_anny } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('transporte')
+      .update({ estado, observacion_anny })
+      .eq('id', id);
+
+    if (error) {
+      console.error("Error al actualizar en Supabase:", error);
+      return res.status(500).json({ error: error.message });
+    }
+    res.status(200).json({ message: 'Registro actualizado correctamente', data });
+  } catch (err) {
+    console.error("Error en actualizarRegistro:", err);
     res.status(500).json({ error: err.message });
   }
 };
