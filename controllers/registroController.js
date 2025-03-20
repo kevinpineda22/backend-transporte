@@ -19,7 +19,7 @@ export const guardarRegistro = async (req, res) => {
         valor_total, 
         observacion 
       }
-    ]);
+    ]).select(); // Añadido .select() para devolver el registro insertado
 
     if (error) {
       console.error("Error al insertar en Supabase:", error);
@@ -34,7 +34,11 @@ export const guardarRegistro = async (req, res) => {
 
 export const obtenerHistorial = async (req, res) => {
   try {
-    const { data, error } = await supabase.from('transporte').select('*');
+    const { data, error } = await supabase
+      .from('transporte')
+      .select('*')
+      .order('id', { ascending: true }); // Ordenar por 'id' ascendente para consistencia
+
     if (error) {
       console.error("Error al obtener historial desde Supabase:", error);
       return res.status(500).json({ error: error.message });
@@ -54,13 +58,17 @@ export const actualizarRegistro = async (req, res) => {
     const { data, error } = await supabase
       .from('transporte')
       .update({ estado, observacion_anny })
-      .eq('id', id);
+      .eq('id', id)
+      .select(); // Añadido .select() para devolver el registro actualizado
 
     if (error) {
       console.error("Error al actualizar en Supabase:", error);
       return res.status(500).json({ error: error.message });
     }
-    res.status(200).json({ message: 'Registro actualizado correctamente', data });
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'Registro no encontrado' });
+    }
+    res.status(200).json({ message: 'Registro actualizado correctamente', data: data[0] });
   } catch (err) {
     console.error("Error en actualizarRegistro:", err);
     res.status(500).json({ error: err.message });
