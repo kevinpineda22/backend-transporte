@@ -1,3 +1,4 @@
+// controllers/registroController.js
 import supabase from '../config/supabaseClient.js';
 
 export const guardarRegistro = async (req, res) => {
@@ -8,7 +9,7 @@ export const guardarRegistro = async (req, res) => {
       { 
         fecha, 
         tipo_formulario, 
-        conductor, 
+        conductor,
         placa_vehiculo, 
         cedula,
         cuenta_bancaria,
