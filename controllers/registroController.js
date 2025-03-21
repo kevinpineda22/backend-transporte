@@ -2,7 +2,7 @@
 import supabase from '../config/supabaseClient.js';
 
 export const guardarRegistro = async (req, res) => {
-  const { fecha, tipo_formulario, conductor, placa_vehiculo, cedula, tipoCuenta, cuenta_bancaria, fecha_viaje, origen, sedes, valor_total, observacion } = req.body;
+  const { fecha, tipo_formulario, conductor, placa_vehiculo, cedula, tipo_cuenta, cuenta_bancaria, fecha_viaje, origen, sedes, valor_total, observacion } = req.body;
 
   try {
     const { data, error } = await supabase.from('transporte').insert([
@@ -12,7 +12,7 @@ export const guardarRegistro = async (req, res) => {
         conductor,
         placa_vehiculo, 
         cedula,
-        tipoCuenta, 
+        tipo_cuenta, 
         cuenta_bancaria,
         fecha_viaje, 
         origen,      // Se espera un array 
