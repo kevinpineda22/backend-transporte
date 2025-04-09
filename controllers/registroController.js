@@ -1,4 +1,4 @@
-// controllers/registroController.js
+// backend/controllers/registroController.js
 import supabase from '../config/supabaseClient.js';
 
 export const guardarRegistro = async (req, res) => {
@@ -72,6 +72,42 @@ export const actualizarRegistro = async (req, res) => {
     res.status(200).json({ message: 'Registro actualizado correctamente', data: data[0] });
   } catch (err) {
     console.error("Error en actualizarRegistro:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Nuevo endpoint para el dashboard
+export const obtenerResumen = async (req, res) => {
+  try {
+    const { data: registros, error } = await supabase
+      .from('transporte')
+      .select('estado, valor_total, conductor');
+
+    if (error) {
+      console.error("Error al obtener resumen desde Supabase:", error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    const totalRegistros = registros.length;
+    const totalValor = registros.reduce((sum, reg) => sum + (reg.valor_total || 0), 0);
+    const estados = registros.reduce((acc, reg) => {
+      const estado = reg.estado || 'Pendiente';
+      acc[estado] = (acc[estado] || 0) + 1;
+      return acc;
+    }, {});
+    const viajesPorConductor = registros.reduce((acc, reg) => {
+      acc[reg.conductor] = (acc[reg.conductor] || 0) + 1;
+      return acc;
+    }, {});
+
+    res.status(200).json({
+      totalRegistros,
+      totalValor,
+      estados,
+      viajesPorConductor,
+    });
+  } catch (err) {
+    console.error("Error en obtenerResumen:", err);
     res.status(500).json({ error: err.message });
   }
 };
