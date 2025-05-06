@@ -35,15 +35,25 @@ export const guardarRegistro = async (req, res) => {
 
 export const obtenerHistorial = async (req, res) => {
   try {
-    const { data, error } = await supabase
-      .from('transporte')
-      .select('*')
-      .order('id', { ascending: true }); // Ordenar por 'id' ascendente para consistencia
+    const { fechaInicio, fechaFin } = req.query; // Obtener los parámetros de consulta
+
+    let query = supabase.from('transporte').select('*').order('id', { ascending: true });
+
+    // Aplicar filtro por fecha_viaje si se proporcionan los parámetros
+    if (fechaInicio) {
+      query = query.gte('fecha_viaje', fechaInicio); // Filtrar registros con fecha_viaje >= fechaInicio
+    }
+    if (fechaFin) {
+      query = query.lte('fecha_viaje', fechaFin); // Filtrar registros con fecha_viaje <= fechaFin
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("Error al obtener historial desde Supabase:", error);
       return res.status(500).json({ error: error.message });
     }
+
     res.status(200).json(data);
   } catch (err) {
     console.error("Error en el controlador:", err);
