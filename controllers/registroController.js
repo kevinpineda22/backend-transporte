@@ -61,6 +61,32 @@ export const obtenerHistorial = async (req, res) => {
   }
 };
 
+
+export const eliminarRegistro = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from('transporte')
+      .delete()
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error("Error al eliminar en Supabase:", error);
+      return res.status(500).json({ error: error.message });
+    }
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'Registro no encontrado' });
+    }
+    res.status(200).json({ message: 'Registro eliminado correctamente' });
+  } catch (err) {
+    console.error("Error en eliminarRegistro:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 export const actualizarRegistro = async (req, res) => {
   const { id } = req.params;
   const { estado, observacion_anny } = req.body;

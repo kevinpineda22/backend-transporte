@@ -8,5 +8,6 @@ router.post('/registro', guardarRegistro);
 router.get('/historial', obtenerHistorial);
 router.put('/registro/:id', actualizarRegistro);
 router.get('/resumen', obtenerResumen); // Nueva ruta para el dashboard
+router.delete('/registro/:id', eliminarRegistro);
 
 export default router;
