@@ -1,4 +1,3 @@
-// backend/controllers/registroController.js
 import supabase from '../config/supabaseClient.js';
 
 export const guardarRegistro = async (req, res) => {
@@ -15,12 +14,12 @@ export const guardarRegistro = async (req, res) => {
         tipo_cuenta, 
         cuenta_bancaria,
         fecha_viaje, 
-        origen,      // Se espera un array 
-        sedes,       // Se espera un array 
+        origen,      
+        sedes,       
         valor_total, 
         observacion 
       }
-    ]).select(); // Añadido .select() para devolver el registro insertado
+    ]).select();
 
     if (error) {
       console.error("Error al insertar en Supabase:", error);
@@ -35,16 +34,15 @@ export const guardarRegistro = async (req, res) => {
 
 export const obtenerHistorial = async (req, res) => {
   try {
-    const { fechaInicio, fechaFin } = req.query; // Obtener los parámetros de consulta
+    const { fechaInicio, fechaFin } = req.query;
 
     let query = supabase.from('transporte').select('*').order('id', { ascending: true });
 
-    // Aplicar filtro por fecha_viaje si se proporcionan los parámetros
     if (fechaInicio) {
-      query = query.gte('fecha_viaje', fechaInicio); // Filtrar registros con fecha_viaje >= fechaInicio
+      query = query.gte('fecha_viaje', fechaInicio);
     }
     if (fechaFin) {
-      query = query.lte('fecha_viaje', fechaFin); // Filtrar registros con fecha_viaje <= fechaFin
+      query = query.lte('fecha_viaje', fechaFin);
     }
 
     const { data, error } = await query;
@@ -61,6 +59,30 @@ export const obtenerHistorial = async (req, res) => {
   }
 };
 
+export const actualizarRegistro = async (req, res) => {
+  const { id } = req.params;
+  const { estado, observacion_anny } = req.body;
+
+  try {
+    const { data, error } = await supabase
+      .from('transporte')
+      .update({ estado, observacion_anny })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      console.error("Error al actualizar en Supabase:", error);
+      return res.status(500).json({ error: error.message });
+    }
+    if (!data || data.length === 0) {
+      return res.status(404).json({ error: 'Registro no encontrado' });
+    }
+    res.status(200).json({ message: 'Registro actualizado correctamente', data: data[0] });
+  } catch (err) {
+    console.error("Error en actualizarRegistro:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
 
 export const eliminarRegistro = async (req, res) => {
   const { id } = req.params;
@@ -86,32 +108,6 @@ export const eliminarRegistro = async (req, res) => {
   }
 };
 
-export const actualizarRegistro = async (req, res) => {
-  const { id } = req.params;
-  const { estado, observacion_anny } = req.body;
-
-  try {
-    const { data, error } = await supabase
-      .from('transporte')
-      .update({ estado, observacion_anny })
-      .eq('id', id)
-      .select(); // Añadido .select() para devolver el registro actualizado
-
-    if (error) {
-      console.error("Error al actualizar en Supabase:", error);
-      return res.status(500).json({ error: error.message });
-    }
-    if (!data || data.length === 0) {
-      return res.status(404).json({ error: 'Registro no encontrado' });
-    }
-    res.status(200).json({ message: 'Registro actualizado correctamente', data: data[0] });
-  } catch (err) {
-    console.error("Error en actualizarRegistro:", err);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-// Nuevo endpoint para el dashboard
 export const obtenerResumen = async (req, res) => {
   try {
     const { data: registros, error } = await supabase
@@ -127,7 +123,7 @@ export const obtenerResumen = async (req, res) => {
     const totalValor = registros.reduce((sum, reg) => sum + (reg.valor_total || 0), 0);
     const estados = registros.reduce((acc, reg) => {
       const estado = reg.estado || 'Pendiente';
-      acc[estado] = (acc[estado] || 0) + 1;
+      acc[ hypergigante ] = (acc[estado] || 0) + 1;
       return acc;
     }, {});
     const viajesPorConductor = registros.reduce((acc, reg) => {
