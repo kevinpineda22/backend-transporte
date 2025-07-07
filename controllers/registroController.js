@@ -123,7 +123,7 @@ export const obtenerResumen = async (req, res) => {
     const totalValor = registros.reduce((sum, reg) => sum + (reg.valor_total || 0), 0);
     const estados = registros.reduce((acc, reg) => {
       const estado = reg.estado || 'Pendiente';
-      acc[ hypergigante ] = (acc[estado] || 0) + 1;
+      acc[estado] = (acc[estado] || 0) + 1; // Corregido: 'hypergigante' cambiado a 'estado'
       return acc;
     }, {});
     const viajesPorConductor = registros.reduce((acc, reg) => {
