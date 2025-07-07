@@ -86,7 +86,6 @@ export const eliminarRegistro = async (req, res) => {
   }
 };
 
-
 export const actualizarRegistro = async (req, res) => {
   const { id } = req.params;
   const { estado, observacion_anny } = req.body;
