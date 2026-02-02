@@ -136,14 +136,15 @@ const HistorialTransporte = () => {
       name: "Conductor",
       selector: (r) => r.conductor,
       sortable: true,
-      grow: 2,
-      style: { fontWeight: 600, color: "#2b3674" },
+      style: { flexGrow: 2, fontWeight: 600, color: "#2b3674" },
+      headerStyle: { flexGrow: 2 },
     },
     {
       name: "Placa",
       selector: (r) => r.placa_vehiculo,
       width: "100px",
-      center: true,
+      style: { justifyContent: "center" },
+      headerStyle: { justifyContent: "center" },
     },
     {
       name: "Tipo",
@@ -160,7 +161,8 @@ const HistorialTransporte = () => {
           minimumFractionDigits: 0,
         }).format(r.valor_total),
       width: "130px",
-      right: true,
+      style: { justifyContent: "flex-end", textAlign: "right" },
+      headerStyle: { justifyContent: "flex-end" },
     },
     {
       name: "Estado",
@@ -183,7 +185,8 @@ const HistorialTransporte = () => {
           </span>
         ),
       width: "140px",
-      center: true,
+      style: { justifyContent: "center" },
+      headerStyle: { justifyContent: "center" },
     },
     {
       name: "Observación Admin",
@@ -203,11 +206,11 @@ const HistorialTransporte = () => {
             {row.observacion_anny || "-"}
           </span>
         ),
-      grow: 2,
+      style: { flexGrow: 2 },
+      headerStyle: { flexGrow: 2 },
     },
     {
       name: "Acciones",
-      button: true,
       cell: (row) =>
         editingId === row.id ? (
           <div className="ht-actions">
@@ -245,7 +248,8 @@ const HistorialTransporte = () => {
           </div>
         ),
       width: "120px",
-      center: true,
+      style: { justifyContent: "center" },
+      headerStyle: { justifyContent: "center" },
     },
   ];
 

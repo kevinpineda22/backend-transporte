@@ -33,6 +33,7 @@ export const guardarRegistro = async (req, res) => {
           sedes,
           valor_total,
           observacion,
+          estado: "Pendiente", // Aseguramos estado inicial
         },
       ])
       .select();
@@ -73,7 +74,12 @@ export const obtenerHistorial = async (req, res) => {
       query = query.ilike("conductor", `%${conductor}%`);
     }
     if (estado && estado !== "Todos" && estado !== "") {
-      query = query.eq("estado", estado);
+      if (estado === "Pendiente") {
+        // Si buscan "Pendiente", traemos 'Pendiente' Y también los nulos
+        query = query.or("estado.eq.Pendiente,estado.is.null");
+      } else {
+        query = query.eq("estado", estado);
+      }
     }
     if (placa_vehiculo) {
       query = query.ilike("placa_vehiculo", `%${placa_vehiculo}%`);

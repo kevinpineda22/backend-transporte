@@ -142,8 +142,9 @@ const GestionConductores = () => {
       name: "Conductor",
       selector: (row) => row.nombre_completo,
       sortable: true,
-      grow: 2,
       wrap: true,
+      style: { flexGrow: 2 },
+      headerStyle: { flexGrow: 2 },
       cell: (row) => (
         <div
           style={{ fontWeight: "700", color: "#2B3674", fontSize: "0.95rem" }}
@@ -156,7 +157,8 @@ const GestionConductores = () => {
       name: "Placa",
       selector: (row) => row.placa_vehiculo,
       width: "140px",
-      center: true,
+      style: { justifyContent: "center" },
+      headerStyle: { justifyContent: "center" },
       cell: (row) => (
         <div className="atp-badge-plate">
           <FaCar /> {row.placa_vehiculo}
@@ -171,8 +173,9 @@ const GestionConductores = () => {
     },
     {
       name: "Información Bancaria",
-      grow: 3,
       wrap: true,
+      style: { flexGrow: 3 },
+      headerStyle: { flexGrow: 3 },
       cell: (row) => (
         <div
           style={{
@@ -206,9 +209,9 @@ const GestionConductores = () => {
     },
     {
       name: "Acciones",
-      button: true,
       width: "120px",
-      center: true,
+      style: { justifyContent: "center" },
+      headerStyle: { justifyContent: "center" },
       cell: (row) => (
         <div className="atp-action-group">
           <button
