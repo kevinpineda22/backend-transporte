@@ -1,0 +1,227 @@
+.ht-container {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 20px 50px 0px rgba(112, 144, 176, 0.08);
+  margin: 20px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.ht-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ht-title-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2b3674;
+  margin: 0;
+}
+
+.ht-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ht-btn-filter,
+.ht-btn-export,
+.ht-btn-reset {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.ht-btn-filter {
+  background: #e9edf7;
+  color: #2b3674;
+}
+.ht-btn-filter:hover {
+  background: #dce4f5;
+}
+
+.ht-btn-export {
+  background: #107c41;
+  color: white;
+}
+.ht-btn-export:hover {
+  background: #0b5c30;
+}
+
+.ht-btn-reset {
+  background: #fff0f0;
+  color: #e63946;
+  width: 100%;
+  justify-content: center;
+}
+.ht-btn-reset:hover {
+  background: #ffe0e0;
+}
+
+/* Filtros */
+.ht-filter-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  background: #f8f9fa;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  border: 1px solid #ebeff8;
+}
+
+.ht-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ht-filter-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8f9bba;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ht-filter-group input,
+.ht-filter-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0e5f2;
+  border-radius: 12px;
+  background: #fff;
+  outline: none;
+  color: #2b3674;
+  font-weight: 500;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.ht-filter-group input:focus,
+.ht-filter-group select:focus {
+  border-color: #4318ff;
+}
+
+.ht-filter-actions {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Tabla */
+.ht-table-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e0e5f2;
+}
+
+/* Badges de Estado */
+.ht-status-badge {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  display: inline-block;
+  min-width: 90px;
+}
+
+.ht-status-badge.pendiente {
+  background-color: #fff8e1;
+  color: #ffb547;
+}
+.ht-status-badge.completado {
+  background-color: #e8f5e9;
+  color: #05cd99;
+}
+.ht-status-badge.rechazado {
+  background-color: #ffebee;
+  color: #ee5d50;
+}
+
+/* Action Buttons */
+.ht-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.btn-icon.edit {
+  background: #e9edf7;
+  color: #4318ff;
+}
+.btn-icon.edit:hover {
+  background: #4318ff;
+  color: white;
+}
+
+.btn-icon.delete {
+  background: #fff0f0;
+  color: #ee5d50;
+}
+.btn-icon.delete:hover {
+  background: #ee5d50;
+  color: white;
+}
+
+.btn-icon.save {
+  background: #e8f5e9;
+  color: #05cd99;
+}
+.btn-icon.save:hover {
+  background: #05cd99;
+  color: white;
+}
+
+.btn-icon.cancel {
+  background: #f4f7fe;
+  color: #a3aed0;
+}
+.btn-icon.cancel:hover {
+  background: #a3aed0;
+  color: white;
+}
+
+/* Edit Inputs within Table */
+.ht-select-edit,
+.ht-input-edit {
+  padding: 6px 10px;
+  border: 1px solid #e0e5f2;
+  border-radius: 8px;
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ht-obs-text {
+  font-size: 13px;
+  color: #707eae;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}

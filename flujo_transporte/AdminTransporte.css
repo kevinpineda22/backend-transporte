@@ -1,0 +1,294 @@
+/* src/pages/flujo_transporte/AdminTransporte.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* --- PALETA CORPORATIVA (Basada en AdminTrazabilidad) --- */
+  --atp-primary-dark: #210d65;    /* Azul Oscuro Corporativo */
+  --atp-primary-medium: #3b1a9a;  /* Morado Medio */
+  --atp-accent-green: #89DC00;    /* Verde Merkahorro (Acción) */
+  --atp-accent-blue: #2196f3;     /* Azul Info */
+  --atp-danger: #e63946;          /* Rojo Error */
+  
+  /* --- FONDOS Y TEXTOS --- */
+  --atp-bg-main: #f4f6fb;         /* Fondo General Suave */
+  --atp-card-bg: #ffffff;         /* Fondo Tarjetas */
+  --atp-text-dark: #1f2933;       /* Texto Principal */
+  --atp-text-light: #f8f9fa;      /* Texto Claro/Sidebar */
+  --atp-text-muted: #64748b;      /* Texto Secundario */
+  --atp-border: #d9e2ec;          /* Bordes Sutiles */
+  
+  /* --- EFECTOS --- */
+  --atp-shadow: 0 8px 24px rgba(18, 38, 63, 0.06);
+  --atp-transition: 0.3s ease;
+}
+
+/* --- LAYOUT PRINCIPAL (Idéntico a Trazabilidad) --- */
+.atp-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--atp-bg-main);
+  font-family: 'Poppins', sans-serif;
+  position: fixed; /* Layout fijo como el referente */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- SIDEBAR CORPORATIVO --- */
+.atp-sidebar {
+  width: 280px;
+  /* Degradado corporativo exacto */
+  background: linear-gradient(180deg, var(--atp-primary-dark) 0%, var(--atp-primary-medium) 100%);
+  color: var(--atp-text-light);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  padding-top: 1rem;
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.atp-sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.atp-logo-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--atp-text-light);
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+}
+
+.atp-nav {
+  flex: 1;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto;
+}
+
+/* Botones del Sidebar (Estilo Trazabilidad) */
+.atp-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--atp-transition);
+  border-left: 4px solid transparent; /* Indicador lateral */
+  width: 100%;
+  text-align: left;
+}
+
+.atp-nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-left-color: var(--atp-accent-green);
+}
+
+.atp-nav-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-weight: 600;
+  border-left-color: var(--atp-accent-green);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.atp-sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- ÁREA DE CONTENIDO --- */
+.atp-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.atp-header {
+  background-color: var(--atp-card-bg);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--atp-border);
+  box-shadow: var(--atp-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.atp-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--atp-primary-dark);
+  margin: 0;
+}
+
+.atp-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- TARJETAS Y CONTENEDORES (Estilo Dashboard) --- */
+.atp-card {
+  background: var(--atp-card-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--atp-shadow);
+  border: 1px solid var(--atp-border); /* Borde sutil */
+  margin-bottom: 20px;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.atp-btn-primary {
+  background: linear-gradient(135deg, var(--atp-primary-dark), var(--atp-primary-medium));
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(33, 13, 101, 0.2);
+}
+
+.atp-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(33, 13, 101, 0.3);
+}
+
+.atp-btn-cancel {
+  background: #f1f3f5;
+  color: var(--atp-text-dark);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid var(--atp-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.atp-btn-cancel:hover {
+  background: #e9ecef;
+}
+
+/* --- INPUTS CORPORATIVOS --- */
+.atp-input-search,
+.atp-form-group input,
+.atp-form-group select {
+  padding: 12px 16px;
+  border: 1px solid var(--atp-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: var(--atp-text-dark);
+  transition: all 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.atp-input-search:focus,
+.atp-form-group input:focus,
+.atp-form-group select:focus {
+  outline: none;
+  border-color: var(--atp-primary-medium);
+  box-shadow: 0 0 0 3px rgba(59, 26, 154, 0.1);
+}
+
+/* --- TABLAS (Estilo Trazabilidad) --- */
+.atp-table-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--atp-border);
+}
+
+/* --- BADGES Y ETIQUETAS --- */
+.atp-badge-plate {
+  background: rgba(33, 150, 243, 0.1); /* Azul suave */
+  color: var(--atp-accent-blue);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* --- ACCIONES --- */
+.atp-action-group { display: flex; gap: 8px; }
+
+.atp-action-icon {
+  width: 34px; height: 34px; border: none; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.atp-action-icon.atp-edit { background: var(--atp-accent-blue); }
+.atp-action-icon.atp-edit:hover { background: #1976d2; }
+
+.atp-action-icon.atp-delete { background: var(--atp-danger); }
+.atp-action-icon.atp-delete:hover { background: #c62828; }
+
+/* --- MODAL (Estilo limpio) --- */
+.atp-modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(33, 13, 101, 0.4); 
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1000; backdrop-filter: blur(3px);
+}
+
+.atp-modal-content {
+  background: var(--atp-card-bg); width: 90%; max-width: 600px;
+  border-radius: 16px; padding: 2.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  animation: atpPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes atpPopIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.atp-modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 2rem; border-bottom: 1px solid var(--atp-border); padding-bottom: 1rem;
+}
+.atp-modal-header h3 { margin: 0; color: var(--atp-primary-dark); font-size: 1.5rem; }
+.atp-modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--atp-text-muted); transition: 0.2s; }
+.atp-modal-close:hover { color: var(--atp-danger); }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .atp-layout { flex-direction: column; }
+  .atp-sidebar { width: 100%; min-height: auto; position: relative; }
+  .atp-nav { flex-direction: row; overflow-x: auto; padding: 1rem; }
+  .atp-nav-item { width: auto; padding: 0.75rem 1rem; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; }
+  .atp-nav-item.active { border-left: none; border-bottom-color: var(--atp-accent-green); }
+  .atp-sidebar-footer { display: none; }
+  .atp-content { padding: 1rem; }
+}

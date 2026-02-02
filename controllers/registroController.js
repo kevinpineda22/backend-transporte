@@ -1,31 +1,47 @@
-import supabase from '../config/supabaseClient.js';
+import supabase from "../config/supabaseClient.js";
 
 export const guardarRegistro = async (req, res) => {
-  const { fecha, tipo_formulario, conductor, placa_vehiculo, cedula, tipo_cuenta, cuenta_bancaria, fecha_viaje, origen, sedes, valor_total, observacion } = req.body;
+  const {
+    fecha,
+    tipo_formulario,
+    conductor,
+    placa_vehiculo,
+    cedula,
+    tipo_cuenta,
+    cuenta_bancaria,
+    fecha_viaje,
+    origen,
+    sedes,
+    valor_total,
+    observacion,
+  } = req.body;
 
   try {
-    const { data, error } = await supabase.from('transporte').insert([
-      { 
-        fecha, 
-        tipo_formulario, 
-        conductor,
-        placa_vehiculo, 
-        cedula,
-        tipo_cuenta, 
-        cuenta_bancaria,
-        fecha_viaje, 
-        origen,      
-        sedes,       
-        valor_total, 
-        observacion 
-      }
-    ]).select();
+    const { data, error } = await supabase
+      .from("transporte")
+      .insert([
+        {
+          fecha,
+          tipo_formulario,
+          conductor,
+          placa_vehiculo,
+          cedula,
+          tipo_cuenta,
+          cuenta_bancaria,
+          fecha_viaje,
+          origen,
+          sedes,
+          valor_total,
+          observacion,
+        },
+      ])
+      .select();
 
     if (error) {
       console.error("Error al insertar en Supabase:", error);
       return res.status(500).json({ error: error.message });
     }
-    res.status(200).json({ message: 'Registro guardado correctamente', data });
+    res.status(200).json({ message: "Registro guardado correctamente", data });
   } catch (err) {
     console.error("Error en el controlador:", err);
     res.status(500).json({ error: err.message });
@@ -34,15 +50,38 @@ export const guardarRegistro = async (req, res) => {
 
 export const obtenerHistorial = async (req, res) => {
   try {
-    const { fechaInicio, fechaFin } = req.query;
+    const {
+      fechaInicio,
+      fechaFin,
+      conductor,
+      estado,
+      placa_vehiculo,
+      tipo_formulario,
+    } = req.query;
 
-    let query = supabase.from('transporte').select('*').order('id', { ascending: true });
+    let query = supabase
+      .from("transporte")
+      .select("*")
+      .order("id", { ascending: false });
 
     if (fechaInicio) {
-      query = query.gte('fecha_viaje', fechaInicio);
+      query = query.gte("fecha_viaje", fechaInicio);
     }
     if (fechaFin) {
-      query = query.lte('fecha_viaje', fechaFin);
+      query = query.lte("fecha_viaje", fechaFin);
+    }
+    if (conductor) {
+      query = query.ilike("conductor", `%${conductor}%`);
+    }
+    if (estado && estado !== "Todos") {
+      // Asegurar que "Todos" no rompa el filtro
+      query = query.eq("estado", estado);
+    }
+    if (placa_vehiculo) {
+      query = query.ilike("placa_vehiculo", `%${placa_vehiculo}%`);
+    }
+    if (tipo_formulario) {
+      query = query.eq("tipo_formulario", tipo_formulario);
     }
 
     const { data, error } = await query;
@@ -65,9 +104,9 @@ export const actualizarRegistro = async (req, res) => {
 
   try {
     const { data, error } = await supabase
-      .from('transporte')
+      .from("transporte")
       .update({ estado, observacion_anny })
-      .eq('id', id)
+      .eq("id", id)
       .select();
 
     if (error) {
@@ -75,9 +114,11 @@ export const actualizarRegistro = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
     if (!data || data.length === 0) {
-      return res.status(404).json({ error: 'Registro no encontrado' });
+      return res.status(404).json({ error: "Registro no encontrado" });
     }
-    res.status(200).json({ message: 'Registro actualizado correctamente', data: data[0] });
+    res
+      .status(200)
+      .json({ message: "Registro actualizado correctamente", data: data[0] });
   } catch (err) {
     console.error("Error en actualizarRegistro:", err);
     res.status(500).json({ error: err.message });
@@ -89,9 +130,9 @@ export const eliminarRegistro = async (req, res) => {
 
   try {
     const { data, error } = await supabase
-      .from('transporte')
+      .from("transporte")
       .delete()
-      .eq('id', id)
+      .eq("id", id)
       .select();
 
     if (error) {
@@ -99,9 +140,9 @@ export const eliminarRegistro = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
     if (!data || data.length === 0) {
-      return res.status(404).json({ error: 'Registro no encontrado' });
+      return res.status(404).json({ error: "Registro no encontrado" });
     }
-    res.status(200).json({ message: 'Registro eliminado correctamente' });
+    res.status(200).json({ message: "Registro eliminado correctamente" });
   } catch (err) {
     console.error("Error en eliminarRegistro:", err);
     res.status(500).json({ error: err.message });
@@ -111,8 +152,8 @@ export const eliminarRegistro = async (req, res) => {
 export const obtenerResumen = async (req, res) => {
   try {
     const { data: registros, error } = await supabase
-      .from('transporte')
-      .select('estado, valor_total, conductor');
+      .from("transporte")
+      .select("estado, valor_total, conductor");
 
     if (error) {
       console.error("Error al obtener resumen desde Supabase:", error);
@@ -120,9 +161,12 @@ export const obtenerResumen = async (req, res) => {
     }
 
     const totalRegistros = registros.length;
-    const totalValor = registros.reduce((sum, reg) => sum + (reg.valor_total || 0), 0);
+    const totalValor = registros.reduce(
+      (sum, reg) => sum + (reg.valor_total || 0),
+      0,
+    );
     const estados = registros.reduce((acc, reg) => {
-      const estado = reg.estado || 'Pendiente';
+      const estado = reg.estado || "Pendiente";
       acc[estado] = (acc[estado] || 0) + 1; // Corregido: 'hypergigante' cambiado a 'estado'
       return acc;
     }, {});

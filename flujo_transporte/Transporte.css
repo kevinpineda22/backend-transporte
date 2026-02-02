@@ -1,0 +1,286 @@
+/* src/pages/flujo_transporte/Transporte.css */
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.transporte-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+  font-family: 'DM Sans', sans-serif;
+  padding: 20px;
+}
+
+/* --- GRID DE SECCIONES --- */
+.form-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px; /* Columna derecha fija */
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .form-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .form-right-column {
+    order: -1; /* Resumen arriba en móviles */
+    margin-bottom: 20px;
+  }
+}
+
+/* --- TARJETAS (CARDS) --- */
+.form-section-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0px 10px 40px rgba(112, 144, 176, 0.08); /* Sombra suave */
+  border: 1px solid #F4F7FE;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.form-section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 20px 40px rgba(112, 144, 176, 0.12);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 30px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #F4F7FE;
+}
+
+.section-icon {
+  background: #E9EDF7;
+  color: #4318FF; /* Azul Vibrante */
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #2B3674;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* --- INPUTS Y GRUPOS --- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8F9BBA; /* Gris suave para labels */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos comunes para inputs */
+.tp-input,
+.tp-select,
+.custom-date-btn,
+.tp-input-read { 
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #E0E5F2;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: #2B3674;
+  background: #FFFFFF;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.tp-input:focus,
+.tp-select:focus,
+.custom-date-btn:focus {
+  border-color: #4318FF;
+  box-shadow: 0 0 0 4px rgba(67, 24, 255, 0.1);
+}
+
+.tp-input-read {
+  background-color: #F8F9FA;
+  color: #A3AED0;
+  border-color: transparent;
+}
+
+.custom-date-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* --- SELECCIÓN GRÁFICA (SEDES) --- */
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.option-card {
+  background: #F4F7FE;
+  border: 2px solid transparent;
+  padding: 20px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 100px;
+}
+
+.option-card:hover {
+  background: #E9EDF7;
+  transform: translateY(-2px);
+}
+
+.option-card.selected {
+  background: #F2F0FF; 
+  border-color: #4318FF;
+  box-shadow: 0 8px 16px rgba(67, 24, 255, 0.15);
+}
+
+.option-name {
+  font-weight: 700;
+  color: #2B3674;
+  font-size: 0.95rem;
+}
+
+.option-card.selected .option-name {
+  color: #4318FF;
+}
+
+.option-price {
+  font-size: 0.8rem;
+  color: #A3AED0;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* --- RESUMEN (DERECHA) --- */
+.summary-box {
+  background: linear-gradient(135deg, #2B3674 0%, #210d65 100%);
+  color: white;
+  padding: 40px 32px;
+  border-radius: 24px;
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 20px 50px rgba(33, 13, 101, 0.25);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.total-label {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.total-amount {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin: 0;
+  color: #FFFFFF;
+  letter-spacing: -1px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 30px 0;
+}
+
+.tp-textarea {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  font-family: inherit;
+  resize: none;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.tp-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tp-submit-btn {
+  background: #05CD99; /* Verde Vibrante */
+  color: #033621;
+  width: 100%;
+  padding: 18px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 30px;
+  box-shadow: 0 10px 20px rgba(5, 205, 153, 0.2);
+}
+
+.tp-submit-btn:hover {
+  background: #06eeb2;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(5, 205, 153, 0.3);
+}
+
+.tp-submit-btn:disabled {
+  background: #A3AED0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Status Messages */
+.status-message {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.status-message.success { background: rgba(5, 205, 153, 0.2); color: #05CD99; }
+.status-message.error { background: rgba(238, 93, 80, 0.2); color: #EE5D50; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
