@@ -59,11 +59,10 @@ export const obtenerHistorial = async (req, res) => {
       tipo_formulario,
     } = req.query;
 
-    let query = supabase
-      .from("transporte")
-      .select("*")
-      .order("id", { ascending: false });
+    // Iniciamos la consulta sin ordenamiento aún
+    let query = supabase.from("transporte").select("*");
 
+    // Aplicamos filtros
     if (fechaInicio) {
       query = query.gte("fecha_viaje", fechaInicio);
     }
@@ -73,16 +72,18 @@ export const obtenerHistorial = async (req, res) => {
     if (conductor) {
       query = query.ilike("conductor", `%${conductor}%`);
     }
-    if (estado && estado !== "Todos") {
-      // Asegurar que "Todos" no rompa el filtro
+    if (estado && estado !== "Todos" && estado !== "") {
       query = query.eq("estado", estado);
     }
     if (placa_vehiculo) {
       query = query.ilike("placa_vehiculo", `%${placa_vehiculo}%`);
     }
-    if (tipo_formulario) {
+    if (tipo_formulario && tipo_formulario !== "Todos" && tipo_formulario !== "") {
       query = query.eq("tipo_formulario", tipo_formulario);
     }
+
+    // Aplicamos el ordenamiento al final para asegurar compatibilidad
+    query = query.order("id", { ascending: false });
 
     const { data, error } = await query;
 
