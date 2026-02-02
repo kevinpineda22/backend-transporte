@@ -78,7 +78,11 @@ export const obtenerHistorial = async (req, res) => {
     if (placa_vehiculo) {
       query = query.ilike("placa_vehiculo", `%${placa_vehiculo}%`);
     }
-    if (tipo_formulario && tipo_formulario !== "Todos" && tipo_formulario !== "") {
+    if (
+      tipo_formulario &&
+      tipo_formulario !== "Todos" &&
+      tipo_formulario !== ""
+    ) {
       query = query.eq("tipo_formulario", tipo_formulario);
     }
 
