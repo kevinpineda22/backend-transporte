@@ -16,6 +16,8 @@ import {
     eliminarConductor 
 } from '../controllers/conductorController.js';
 
+import { obtenerDatosDashboard } from '../controllers/dashboardController.js';
+
 const router = express.Router();
 
 // --- Rutas de Registros (Viajes) ---
@@ -30,5 +32,6 @@ router.get('/conductores', obtenerConductores);       // Obtener lista
 router.post('/conductores', crearConductor);          // Crear nuevo
 router.put('/conductores/:id', actualizarConductor);  // Editar existente
 router.delete('/conductores/:id', eliminarConductor); // Eliminar
+router.get('/dashboard-data', obtenerDatosDashboard);
 
 export default router;
